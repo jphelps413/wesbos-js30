@@ -6,6 +6,7 @@ const progressBar = player.querySelector('.progress__filled');
 const toggle = player.querySelector('.toggle');
 const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('.player__slider');
+const fullScreen = player.querySelector('[data-full]');
 
 function togglePlay() {
   video[ video.paused ? 'play' : 'pause' ]();
@@ -33,6 +34,12 @@ function scrub(e) {
   video.currentTime = scrubTime;
 }
 
+function handleFullScreen(e) {
+  // This sort of works but is not robust. I just wanted to get it this
+  // far.
+  video.webkitRequestFullscreen();
+}
+
 /* Listeners */
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
@@ -51,3 +58,5 @@ progress.addEventListener('click', scrub);
 progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
 progress.addEventListener('mousedown', () => mousedown = true);
 progress.addEventListener('mouseup', () => mousedown = false);
+
+fullScreen.addEventListener('click', handleFullScreen);
