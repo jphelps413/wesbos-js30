@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sort Without Articles</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #bands {
+      list-style: inside square;
+      font-size: 20px;
+      background: white;
+      width: 500px;
+      margin: auto;
+      padding: 0;
+      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+    #bands li {
+      border-bottom: 1px solid #efefef;
+      padding: 10px;
+    }
+    #bands li:last-child {
+      border-bottom: 0;
+    }
+
+    a {
+      color: #ffc600;
+      text-decoration: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <ul id="bands"></ul>
+
+<script>
+  console.clear();
+  const bands = [
+    'ZZ Top',           'The XX',                'A Flock of Seagulls',
+    'The Plot in You',  'The Devil Wears Prada', 'Pierce the Veil',
+    'Norma Jean',       'The Bled',              'Say Anything',
+    'The Midway State', 'We Came as Romans',     'Counterparts',
+    'Oh, Sleeper',      'A Skylit Drive',        'Anywhere But Here',
+    'An Old Dog',       'The Alarm',
+  ];
+
+  /* My Version without regex (inefficient)
+  function compareWithoutArticles(a, b) {
+
+    function stripArts(str, arts = ['a','an','the'] ) {
+      return str.map( s => {
+        words = s.split(' ');
+        slice = (arts.includes(words[0].toLowerCase()) ? 1 : 0);
+        return words.slice(slice).join(' ');
+      });
+    }
+
+    [aa,bb] = stripArts([a,b])
+    return( aa < bb ? -1 : 1 );
+  }
+
+  sortedBands = bands.sort(compareWithoutArticles);
+  */
+
+  function stripArts(word) {
+    return word.replace(/^(a |an |the )/i, '').trim();
+  }
+
+  sortedBands = bands.sort((a, b) => stripArts(a) > stripArts(b) ? 1 : -1);
+
+  document.querySelector('#bands').innerHTML =
+    sortedBands
+      .map(band => `<li>${band}</li>`)
+      .join('');
+
+</script>
+
+</body>
+</html>
